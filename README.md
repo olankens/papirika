@@ -11,11 +11,11 @@
     ...
   </div>&nbsp;</td></tr></tbody>
   <tbody><tr><td align="center" width="99999">
-    <a href="#"><img src=".assets/logo-unknown.svg" align="center" width="56"></a>
+    <a href="https://apple.com/os/macos"><img src=".assets/logo-apple.svg" align="center" width="56"></a>
     <picture><img src=".assets/splitter.gif" align="center" height="40" width="1"/></picture>
-    <a href="#"><img src=".assets/logo-unknown.svg" align="center" width="56"></a>
+    <a href="https://figma.com"><img src=".assets/logo-figma.svg" align="center" width="56"></a>
     <picture><img src=".assets/splitter.gif" align="center" height="40" width="1"/></picture>
-    <a href="#"><img src=".assets/logo-unknown.svg" align="center" width="56"></a>
+    <a href="https://wikipedia.org/wiki/Bash_(Unix_shell)"><img src=".assets/logo-bash.svg" align="center" width="56"></a>
   </td></tr></tbody>
 </table>
 
