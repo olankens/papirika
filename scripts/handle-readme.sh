@@ -5,9 +5,9 @@ set -euo pipefail
 DIR="$(cd "$(dirname "$0")" && pwd)"
 RME="$DIR/../README.md"
 SRC="$DIR/../source"
-MAX=6
+MAX=7
 
-ALL=("$SRC"/*/*.png)
+mapfile -t ALL < <(printf '%s\n' "$SRC"/*/*.png | grep -v '/_raw/')
 TXT="<table>"
 for NUM in "${!ALL[@]}"; do
 	((NUM % MAX == 0)) && TXT="${TXT}$([ "$NUM" -ne 0 ] && echo '</tr></tbody>')<tbody><tr>" || true

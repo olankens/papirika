@@ -6,11 +6,10 @@
     {
       "layers" : [
         {
-          "glass" : false,
-          "image-name" : "Generated.png",
-          "name" : "Generated",
+          "image-name" : "upscayl.svg",
+          "name" : "upscayl",
           "position" : {
-            "scale" : 1.32,
+            "scale" : 2.35,
             "translation-in-points" : [
               0,
               0

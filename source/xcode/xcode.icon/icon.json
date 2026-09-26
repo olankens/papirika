@@ -6,10 +6,10 @@
     {
       "layers" : [
         {
-          "image-name" : "xcode.svg",
+          "image-name" : "xcode.png",
           "name" : "xcode",
           "position" : {
-            "scale" : 2.35,
+            "scale" : 1.18,
             "translation-in-points" : [
               0,
               0
