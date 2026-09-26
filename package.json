@@ -9,7 +9,7 @@
     "prepare": "simple-git-hooks"
   },
   "cspell": {
-    "words": ["redisinsight", "upscayl"]
+    "words": ["redisinsight", "upscayl", "iina"]
   },
   "commitlint": {
     "extends": ["@commitlint/config-conventional"],
