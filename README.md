@@ -8,7 +8,7 @@
     <a href="https://olankens.com">WEBSITE</a>
   </div></td></tr></tbody>
   <tbody><tr><td align="center" width="99999">&nbsp;<div>
-    ...
+    Icon pack inspired by Papirus, redrawn for macOS Golden Gate, handcrafted icons for beloved apps, built with Apple tools, Figma, and Bash, ready to beautify every Mac dock and desktop.
   </div>&nbsp;</td></tr></tbody>
   <tbody><tr><td align="center" width="99999">
     <a href="https://apple.com/os/macos"><img src=".assets/logo-apple.svg" align="center" width="56"></a>

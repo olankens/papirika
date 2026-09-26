@@ -21,7 +21,7 @@ main() {
 	local icon_size=180
 	local font='/System/Library/Fonts/Supplemental/Arial.ttf'
 
-	trap "rm -rf '$tmp'" EXIT
+	trap 'rm -rf "$tmp"' EXIT
 	mkdir -p "$assets_dir"
 
 	find "$source_dir" \
