@@ -5,7 +5,7 @@ set -euo pipefail
 DIR="$(cd "$(dirname "$0")" && pwd)"
 RME="$DIR/../README.md"
 SRC="$DIR/../source"
-MAX=7
+MAX=5
 
 mapfile -t ALL < <(printf '%s\n' "$SRC"/*/*.png | grep -v '/_raw/')
 TXT="<table>"
