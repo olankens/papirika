@@ -33,11 +33,21 @@
 
 ## LEARNING
 
-### CHANGE APPLICATION ICON
+### CHANGE NON-SYSTEM ICON
 
 ```shell
 address="https://github.com/olankens/papirika/raw/refs/heads/main/source/android-studio/android-studio.icns"
 picture="$(mktemp -d)/$(basename "$address")"
 curl -LA "mozilla/5.0" "$address" -o "$picture"
 fileicon set "/Applications/Android Studio.app" "$picture"
+```
+
+### CHANGE SYSTEM ICON
+
+```shell
+[[ "$(csrutil status)" == *"enabled"* ]] && exit
+address="https://github.com/olankens/papirika/raw/refs/heads/main/source/terminal/terminal.icns"
+picture="$(mktemp -d)/$(basename "$address")"
+curl -LA "mozilla/5.0" "$address" -o "$picture"
+sudo fileicon set "/System/Applications/Utilities/Terminal.app" "$picture"
 ```
