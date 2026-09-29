@@ -12,7 +12,7 @@ TXT="<table>"
 for NUM in "${!ALL[@]}"; do
 	((NUM % MAX == 0)) && TXT="${TXT}$([ "$NUM" -ne 0 ] && echo '</tr></tbody>')<tbody><tr>" || true
 	FLD=$(basename "$(dirname "${ALL[$NUM]}")")
-	TXT="${TXT}<td align=\"center\" width=\"99999\"><p align=\"center\"><a href=\"source/${FLD}/${FLD}.icns\"><img src=\"source/${FLD}/${FLD}.png\" align=\"center\" width=\"96\"></a></p></td>"
+	TXT="${TXT}<td align=\"center\" width=\"99999\">&nbsp;<p align=\"center\"><a href=\"source/${FLD}/${FLD}.icns\"><img src=\"source/${FLD}/${FLD}.png\" align=\"center\" width=\"96\"></a></p>&nbsp;</td>"
 done
 TXT="${TXT}</tr></tbody></table>"
 

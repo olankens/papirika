@@ -10,9 +10,9 @@ package-lock.json
 pnpm-lock.yaml
 
 # Project
+source/_raw/
 .assets/Generated.png
-source/_raw
+.output.txt
 
 # Vscode
 .vscode/
-.output.txt
