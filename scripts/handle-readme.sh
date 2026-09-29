@@ -7,12 +7,12 @@ RME="$DIR/../README.md"
 SRC="$DIR/../source"
 MAX=5
 
-mapfile -t ALL < <(printf '%s\n' "$SRC"/*/*.png | grep -v '/_raw/')
+ALL=() && while IFS= read -r line; do ALL+=("$line"); done < <(printf '%s\n' "$SRC"/*/*.png | grep -v '/_raw/')
 TXT="<table>"
 for NUM in "${!ALL[@]}"; do
 	((NUM % MAX == 0)) && TXT="${TXT}$([ "$NUM" -ne 0 ] && echo '</tr></tbody>')<tbody><tr>" || true
 	FLD=$(basename "$(dirname "${ALL[$NUM]}")")
-	TXT="${TXT}<td align=\"center\" width=\"99999\">&nbsp;<div><a href=\"source/${FLD}/${FLD}.icns\"><img src=\"source/${FLD}/${FLD}.png\" align=\"center\" width=\"100%\"></a></div>&nbsp;</td>"
+	TXT="${TXT}<td align=\"center\" width=\"99999\">&nbsp;<p align=\"center\"><a href=\"source/${FLD}/${FLD}.icns\"><img src=\"source/${FLD}/${FLD}.png\" align=\"center\" width=\"80%\"></a></p>&nbsp;</td>"
 done
 TXT="${TXT}</tr></tbody></table>"
 
