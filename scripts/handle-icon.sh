@@ -3,52 +3,55 @@
 # shellcheck disable=SC2155
 # shellcheck shell=bash
 
-#!/usr/bin/env bash
-
 main() {
 
+	# Enable strictness
 	set -euo pipefail
 
-	local scripts_dir="$(cd "$(dirname "$0")" && pwd)"
-	local source_dir="$scripts_dir/../source"
-	local assets_dir="$scripts_dir/../.assets"
-	local output="$assets_dir/Generated.png"
-	local tmp="$(mktemp -d)"
+	# Define paths
+	local scripts="$(cd "$(dirname "$0")" && pwd)"
+	local icondir="$scripts/../source"
+	local storage="$scripts/../.assets"
+	local subject="$storage/Generated.png"
+	local tempdir="$(mktemp -d)"
 
-	local size=1024
-	local grid=4
-	local gap=16
-	local icon_size=180
-	local font='/System/Library/Fonts/Supplemental/Arial.ttf'
+	# Handle layout
+	local maximum=1024
+	local gridnum=4
+	local gapsize=16
+	local boxsize=180
 
-	trap 'rm -rf "$tmp"' EXIT
-	mkdir -p "$assets_dir"
+	# Create assets
+	mkdir -p "$storage"
 
-	find "$source_dir" \
+	# Gather icons
+	find "$icondir" \
 		-mindepth 2 \
 		-maxdepth 2 \
 		-type f \
 		-not -path '*/_raw/*' \
 		-iname '*.png' |
-		shuf -n "$((grid * grid))" |
+		shuf -n "$((gridnum * gridnum))" |
 		while IFS= read -r file; do
-			cp "$file" "$tmp/"
+			cp "$file" "$tempdir/"
 		done
 
-	magick montage "$tmp"/*.png \
-		-font "$font" \
-		-tile "${grid}x${grid}" \
-		-geometry "${icon_size}x${icon_size}+${gap}+${gap}" \
+	# Create mosaic
+	magick montage "$tempdir"/*.png \
+		-font "/System/Library/Fonts/Supplemental/Arial.ttf" \
+		-tile "${gridnum}x${gridnum}" \
+		-geometry "${boxsize}x${boxsize}+${gapsize}+${gapsize}" \
 		-background none \
 		-pointsize 0 \
-		"$tmp/mosaic.png"
+		"$tempdir/mosaic.png"
 
-	magick "$tmp/mosaic.png" \
+	# Create output
+	magick "$tempdir/mosaic.png" \
 		-background '#646464' \
 		-gravity center \
-		-extent "${size}x${size}" \
+		-extent "${maximum}x${maximum}" \
 		-strip \
-		"$output"
+		"$subject"
 
 }
 

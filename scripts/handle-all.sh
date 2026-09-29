@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+# shellcheck disable=SC2155
+# shellcheck shell=bash
 
-scripts_dir="$(cd "$(dirname "$0")" && pwd)"
+main() {
 
-bash "$scripts_dir/handle-icns.sh"
-bash "$scripts_dir/handle-preview.sh"
-bash "$scripts_dir/handle-readme.sh"
+	# Enable strictness
+	set -euo pipefail
+
+	# Invoke scripts
+	local scripts="$(cd "$(dirname "$0")" && pwd)"
+	bash "$scripts/handle-icns.sh"
+	bash "$scripts/handle-readme.sh"
+
+}
+
+if [[ -z "${BASH_SOURCE[0]:-}" || "${BASH_SOURCE[0]}" == "$0" ]]; then main "$@"; fi

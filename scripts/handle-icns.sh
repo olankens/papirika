@@ -6,14 +6,14 @@
 create_icns() {
 
 	# Handle parameters
-	local app_dir="$1"
+	local element="$1"
 
 	# Create image
-	local app_name="$(basename "$app_dir")"
-	local ictool_path="/Applications/Icon Composer.app/Contents/Executables/ictool"
-	"$ictool_path" "$app_dir/$app_name.icon" \
+	local appname="$(basename "$element")"
+	local program="/Applications/Icon Composer.app/Contents/Executables/ictool"
+	"$program" "$element/$appname.icon" \
 		--export-image \
-		--output-file "$app_dir/$app_name.png" \
+		--output-file "$element/$appname.png" \
 		--platform macOS \
 		--rendition Dark \
 		--width 1024 \
@@ -21,11 +21,13 @@ create_icns() {
 		--scale 1
 
 	# Create icon
-	macicon icns "$app_dir/$app_name.png" --output "$app_dir/$app_name.icns" --force
+	macicon icns "$element/$appname.png" --output "$element/$appname.icns" --force
 
 	# Remove remnants
-	rm -rf "$app_dir/$app_name.iconset"
-	pngquant --force --output "$app_dir/$app_name.png" "$app_dir/$app_name.png"
+	rm -rf "$element/$appname.iconset"
+
+	# Handle compression
+	pngquant --force --output "$element/$appname.png" "$element/$appname.png"
 
 }
 
@@ -50,11 +52,11 @@ main() {
 	update_dependencies
 
 	# Create icns
-	local scripts_dir="$(cd "$(dirname "$0")" && pwd)"
-	local source_dir="$(cd "$scripts_dir/.." && pwd)/source"
-	for app_dir in "$source_dir"/*/; do
-		[[ -d "$app_dir/$(basename "$app_dir").icon" ]] || continue
-		create_icns "$app_dir"
+	local scripts="$(cd "$(dirname "$0")" && pwd)"
+	local icondir="$(cd "$scripts/.." && pwd)/source"
+	for element in "$icondir"/*; do
+		[[ -d "$element/$(basename "$element").icon" ]] || continue
+		create_icns "$element"
 	done
 
 }

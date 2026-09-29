@@ -9,7 +9,7 @@
     "prepare": "simple-git-hooks"
   },
   "cspell": {
-    "words": ["iterm2", "redisinsight", "upscayl", "iina", "jdownloader", "ghostty", "junie"]
+    "words": []
   },
   "commitlint": {
     "extends": ["@commitlint/config-conventional"],
@@ -17,7 +17,9 @@
       "body-empty": [2, "always"],
       "header-case": [2, "always", "lower-case"],
       "header-max-length": [2, "always", 70],
-      "header-min-length": [2, "always", 62]
+      "header-min-length": [2, "always", 62],
+      "type-enum": [2, "always", [ "chore", "docs", "feat", "fix", "refactor", "test"]
+      ]
     }
   },
   "simple-git-hooks": {

@@ -1,23 +1,41 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+# shellcheck disable=SC2155
+# shellcheck shell=bash
 
-DIR="$(cd "$(dirname "$0")" && pwd)"
-RME="$DIR/../README.md"
-SRC="$DIR/../source"
-MAX=5
+main() {
 
-ALL=() && while IFS= read -r line; do ALL+=("$line"); done < <(printf '%s\n' "$SRC"/*/*.png | grep -v '/_raw/')
-TXT="<table>"
-for NUM in "${!ALL[@]}"; do
-	((NUM % MAX == 0)) && TXT="${TXT}$([ "$NUM" -ne 0 ] && echo '</tr></tbody>')<tbody><tr>" || true
-	FLD=$(basename "$(dirname "${ALL[$NUM]}")")
-	TXT="${TXT}<td align=\"center\" width=\"99999\">&nbsp;<p align=\"center\"><a href=\"source/${FLD}/${FLD}.icns\"><img src=\"source/${FLD}/${FLD}.png\" align=\"center\" width=\"96\"></a></p>&nbsp;</td>"
-done
-TXT="${TXT}</tr></tbody></table>"
+	# Enable strictness
+	set -euo pipefail
 
-awk -v BLK="$TXT" '
-  /<!-- START_BLOCK -->/ { print; print BLK; skip=1; next }
-  /<!-- CEASE_BLOCK -->/ { skip=0 }
-  !skip
-' "$RME" >"$RME.tmp" && mv "$RME.tmp" "$RME"
+	# Define paths
+	local scripts="$(cd "$(dirname "$0")" && pwd)"
+	local icondir="$scripts/../source"
+	local subject="$scripts/../README.md"
+	local maxcols=6
+
+	# Gather icons
+	local members=()
+	while IFS= read -r line; do members+=("$line"); done < <(printf '%s\n' "$icondir"/*/*.png | grep -v '/_raw/')
+
+	# Create table
+	local payload="<table>\n"
+	for i in "${!members[@]}"; do
+		local deposit=$(basename "$(dirname "${members[$i]}")")
+		((i % maxcols == 0)) && payload+="  <tbody><tr>\n"
+		payload+="    <td align=\"center\" width=\"99999\"><p align=\"center\"><a href=\"source/${deposit}/${deposit}.icns\"><img src=\"source/${deposit}/${deposit}.png\" align=\"center\" width=\"96\"></a></p></td>\n"
+		((i % maxcols == maxcols - 1)) && payload+="  </tr></tbody>\n"
+	done
+	(( ${#members[@]} % maxcols != 0 )) && payload+="  </tr></tbody>\n"
+	payload+="</table>"
+
+	# Inject table
+	awk -v payload="$payload" '
+	  /<!-- START_BLOCK -->/ { print; print payload; skip=1; next }
+	  /<!-- CEASE_BLOCK -->/ { skip=0 }
+	  !skip
+	' "$subject" >"$subject.tmp" && mv "$subject.tmp" "$subject"
+
+}
+
+if [[ -z "${BASH_SOURCE[0]:-}" || "${BASH_SOURCE[0]}" == "$0" ]]; then main "$@"; fi
